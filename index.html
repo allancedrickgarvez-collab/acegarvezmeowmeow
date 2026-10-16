@@ -54,9 +54,13 @@
                 
                 <!-- Featured Project -->
                 <article class="project-card featured">
-                    <img class="card-media" src="job-order-tracker.png"
-                         alt="Job Order and Payment Tracker dashboard showing total paid collected, outstanding balance, payment distribution chart, collection by cashier chart, and the job order ledger table"
-                         loading="lazy">
+                    <button class="card-media-wrap" type="button"
+                            data-lightbox="job-order-tracker.png"
+                            aria-label="View the Job Order and Payment Tracker screenshot full size">
+                        <img class="card-media" src="job-order-tracker.png"
+                             alt="Job Order and Payment Tracker dashboard showing total paid collected, outstanding balance, payment distribution chart, collection by cashier chart, and the job order ledger table"
+                             loading="lazy">
+                    </button>
                     <div class="card-body">
                         <div class="card-eyebrow">Google Apps Script &middot; Web App</div>
                         <h3>Job Order &amp; Payment Tracker</h3>
@@ -113,6 +117,63 @@
             <p>&copy; 2026 Allan Cedrick B. Garvez. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Lightbox: click any project screenshot to open it full size -->
+    <div class="lightbox" id="lightbox" hidden>
+        <button class="lightbox-close" type="button" aria-label="Close full-size view">&times;</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+
+    <script>
+        (function () {
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightboxImg');
+            var closeBtn = lightbox.querySelector('.lightbox-close');
+            var lastFocus = null;
+
+            function openLightbox(src, alt) {
+                lastFocus = document.activeElement;
+                lightboxImg.src = src;
+                lightboxImg.alt = alt || '';
+                lightbox.hidden = false;
+                requestAnimationFrame(function () {
+                    lightbox.classList.add('is-open');
+                });
+                document.body.classList.add('lightbox-open');
+                closeBtn.focus();
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('is-open');
+                document.body.classList.remove('lightbox-open');
+                window.setTimeout(function () {
+                    lightbox.hidden = true;
+                    lightboxImg.src = '';
+                    if (lastFocus) lastFocus.focus();
+                }, 400);
+            }
+
+            Array.prototype.forEach.call(
+                document.querySelectorAll('[data-lightbox]'),
+                function (trigger) {
+                    trigger.addEventListener('click', function () {
+                        var img = trigger.querySelector('img');
+                        openLightbox(trigger.getAttribute('data-lightbox'), img ? img.alt : '');
+                    });
+                }
+            );
+
+            closeBtn.addEventListener('click', closeLightbox);
+
+            lightbox.addEventListener('click', function (event) {
+                if (event.target === lightbox) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+            });
+        })();
+    </script>
 
 </body>
 </html>
