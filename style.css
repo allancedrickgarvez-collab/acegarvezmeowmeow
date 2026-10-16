@@ -459,55 +459,232 @@ img {
 }
 
 /* ==========================================================================
-   Projects — one full section each
+   Projects — a pinned scroll story
+   The media holds still while the copy scrolls over it, one project at a time.
+   Base rules below are the no-JS / reduced-motion fallback: a plain stack of
+   text-then-image blocks, nothing hidden. .is-live (added by script) swaps in
+   the pinned behaviour.
    ========================================================================== */
 
-.project {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(32px, 4.5vw, 56px);
-    padding-top: clamp(56px, 8vw, 104px);
+.story {
+    height: auto;
 }
 
-.project:first-of-type {
-    padding-top: clamp(8px, 2vw, 24px);
+.story-viewport {
+    position: relative;
+    background-color: var(--bg);
 }
 
-.shot {
+.story-item {
+    position: relative;
+    padding-top: clamp(52px, 7vw, 92px);
+}
+
+/* Fallback order: copy first, artwork after */
+.story-bg,
+.story-scrim,
+.story-dots {
+    display: none;
+}
+
+.story-fg {
     display: block;
     width: 100%;
-    padding: 0;
-    border: 0;
-    border-radius: 24px;
+    max-width: 1024px;
+    margin: clamp(28px, 4vw, 48px) auto 0;
+    padding: 0 22px;
+}
+
+/* ---- Pinned mode ---- */
+
+.story.is-live {
+    height: 360vh;
+}
+
+.story.is-live .story-viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     overflow: hidden;
-    background-color: var(--chip);
-    box-shadow: var(--shadow-image);
-    cursor: zoom-in;
-    -webkit-appearance: none;
-    appearance: none;
-    transition: transform var(--dur) var(--ease);
+    background-color: #05070c;
 }
 
-.shot:hover {
-    transform: scale(1.008);
+@supports (height: 100svh) {
+    .story.is-live {
+        height: 360svh;
+    }
+
+    .story.is-live .story-viewport {
+        height: 100svh;
+    }
 }
 
-.shot img {
+.story.is-live .story-item {
+    position: absolute;
+    inset: 0;
+    padding-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s var(--ease), visibility 0.7s var(--ease);
+}
+
+.story.is-live .story-item.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Blurred overscan fills the screen; the sharp copy sits inside it whole,
+   so a square app icon and a wide dashboard both work the same way. */
+.story.is-live .story-bg {
     display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(54px) saturate(140%) brightness(0.46);
+    transform: scale(1.28);
 }
 
-/* App-icon style artwork: shown at its own size, centred, not stretched */
-.shot-logo {
-    max-width: 340px;
+.story.is-live .story-fg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 10vh 7vw 16vh;
+    object-fit: contain;
+}
+
+/* A spotlight, not a wash: the copy sits on solid darkness while the artwork
+   stays readable around it. Bright screenshots need this; dark ones ignore it. */
+.story.is-live .story-scrim {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background-image:
+        linear-gradient(180deg,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0.30) 30%,
+            rgba(0, 0, 0, 0.32) 66%,
+            rgba(0, 0, 0, 0.72) 100%),
+        radial-gradient(80% 66% at 50% 50%,
+            rgba(0, 0, 0, 0.72) 0%,
+            rgba(0, 0, 0, 0.52) 44%,
+            rgba(0, 0, 0, 0.10) 78%,
+            rgba(0, 0, 0, 0) 100%);
+}
+
+.story.is-live .story-panel {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    width: min(660px, calc(100% - 48px));
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    transform: translate(-50%, calc(-50% + 34px));
+    transition: transform 0.7s var(--ease);
+}
+
+.story.is-live .story-item.is-active .story-panel {
+    transform: translate(-50%, -50%);
+}
+
+/* ---- Story copy — shared by both modes ---- */
+
+.story-panel {
+    max-width: 780px;
     margin: 0 auto;
-    border-radius: 28px;
+    padding: 0 22px;
+    text-align: center;
 }
 
-.shot-logo img {
-    width: 100%;
-    height: auto;
+.story-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+}
+
+.story-headline {
+    font-size: clamp(1.875rem, 4.2vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 16px;
+    text-wrap: balance;
+}
+
+.story-lede {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.5;
+    letter-spacing: -0.016em;
+    color: var(--ink-2);
+    text-wrap: pretty;
+}
+
+.story-lede strong {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.story-panel .chevron-link {
+    margin-top: 18px;
+}
+
+/* Over a photograph, everything goes white */
+.story.is-live .story-eyebrow {
+    color: rgba(255, 255, 255, 0.70);
+}
+
+.story.is-live .story-headline {
+    color: #ffffff;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.55);
+}
+
+.story.is-live .story-lede {
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.70);
+}
+
+.story.is-live .story-lede strong {
+    color: #ffffff;
+}
+
+.story.is-live .story-panel .chevron-link {
+    color: #ffffff;
+}
+
+.story.is-live .story-dots {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    z-index: 4;
+    justify-content: center;
+    gap: 8px;
+}
+
+.story-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.30);
+    transition: background-color var(--dur) var(--ease);
+}
+
+.story-dots span.is-active {
+    background-color: #ffffff;
 }
 
 /* ==========================================================================
@@ -799,8 +976,16 @@ body.lightbox-open {
         padding: 28px 24px;
     }
 
-    .shot-logo {
-        max-width: 240px;
+    .story.is-live .story-fg {
+        padding: 8vh 5vw 15vh;
+    }
+
+    .story.is-live .story-panel {
+        width: calc(100% - 40px);
+    }
+
+    .story.is-live .story-dots {
+        bottom: 20px;
     }
 
     .portrait {
@@ -852,8 +1037,7 @@ body.lightbox-open {
         transform: none;
     }
 
-    .gallery-item:hover img,
-    .shot:hover {
+    .gallery-item:hover img {
         transform: none;
     }
 }
