@@ -68,36 +68,46 @@
             <h2 class="section-title">About Me</h2>
 
             <div class="about-panel" data-glow>
-                <img class="about-avatar" src="ace-garvez.jpg" alt="Portrait of Ace Garvez">
-                <div class="about-copy">
-                    <p class="about-lead">
-                        I'm <strong>Ace Garvez</strong> — a Computer Engineering student at
-                        <strong>ICCT Colleges, Cainta Main Campus</strong>.
-                    </p>
-                    <p>
-                        I focus on software development, embedded systems, and computer network
-                        architecture. I enjoy solving technical problems and building functional,
-                        user-centric hardware and software projects.
-                    </p>
-                    <ul class="about-facts">
-                        <li><span>School</span>ICCT Colleges — Cainta Main Campus</li>
-                        <li><span>Course</span>Computer Engineering</li>
-                        <li><span>Focus</span>Software &middot; Embedded &middot; Networking</li>
-                    </ul>
+                <div class="about-head">
+                    <img class="about-avatar" src="ace-garvez.jpg" alt="Portrait of Ace Garvez">
+                    <div class="about-copy">
+                        <p class="about-lead">
+                            I'm <strong>Ace Garvez</strong> — a Computer Engineering student at
+                            <strong>ICCT Colleges, Cainta Main Campus</strong>.
+                        </p>
+                        <p>
+                            I focus on software development, embedded systems, and computer network
+                            architecture. I enjoy solving technical problems and building functional,
+                            user-centric hardware and software projects.
+                        </p>
+                        <ul class="about-facts">
+                            <li><span>School</span>ICCT Colleges — Cainta Main Campus</li>
+                            <li><span>Course</span>Computer Engineering</li>
+                            <li><span>Focus</span>Software &middot; Embedded &middot; Networking</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="campus-grid">
-                <figure class="campus-figure" data-glow>
-                    <img src="icct-campus.jpg" alt="The ICCT Colleges Cainta Main Campus building"
-                         loading="lazy">
-                    <figcaption>ICCT Colleges &mdash; Cainta Main Campus</figcaption>
-                </figure>
-                <figure class="campus-figure" data-glow>
-                    <img src="icct-society.jpg" alt="ICCT Colleges Foundation and ICCT Engineering Society emblems"
-                         loading="lazy">
-                    <figcaption>ICCT Engineering Society</figcaption>
-                </figure>
+                <!-- Photo grid, styled like an Instagram feed. Click any tile to enlarge. -->
+                <div class="photo-grid">
+                    <button class="photo-tile" type="button" data-glow
+                            data-lightbox="icct-campus.jpg"
+                            aria-label="View the ICCT Cainta Main Campus photo full size">
+                        <img src="icct-campus.jpg"
+                             alt="The ICCT Colleges Cainta Main Campus building"
+                             loading="lazy">
+                        <span class="photo-tag">ICCT Colleges</span>
+                    </button>
+
+                    <button class="photo-tile" type="button" data-glow
+                            data-lightbox="icct-society.jpg"
+                            aria-label="View the ICCT Engineering Society emblems full size">
+                        <img src="icct-society.jpg"
+                             alt="ICCT Colleges Foundation and ICCT Engineering Society emblems"
+                             loading="lazy">
+                        <span class="photo-tag">Engineering Society</span>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -201,7 +211,7 @@
         </div>
     </footer>
 
-    <!-- Lightbox: click any project screenshot to pop it up full size -->
+    <!-- Lightbox: click any screenshot or photo to pop it up full size -->
     <div class="lightbox" id="lightbox" hidden>
         <button class="lightbox-close" type="button" aria-label="Close full-size view">&times;</button>
         <img class="lightbox-img" id="lightboxImg" src="" alt="">
