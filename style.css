@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Apple-style design system
-   Frosted glass, SF typography, pill buttons, soft elevation, dark mode
+   Apple "Liquid Glass" design system
+   Floating glass capsule nav, translucent layered glass, specular edges,
+   ambient wallpaper, SF typography, automatic dark mode
    ========================================================================== */
 
 :root {
@@ -15,20 +16,31 @@
     --blue-press: #006edb;
     --purple: #af52de;
     --pink: #ff375f;
+    --teal: #30d5c8;
 
     /* Light appearance */
     --bg: #fbfbfd;
-    --bg-alt: #f5f5f7;
-    --card: #ffffff;
     --ink: #1d1d1f;
-    --ink-2: #6e6e73;
+    --ink-2: #5f5f66;
     --ink-3: #86868b;
     --hairline: rgba(0, 0, 0, 0.09);
-    --nav-bg: rgba(251, 251, 253, 0.72);
+
+    /* Liquid Glass surfaces */
+    --glass-bg: rgba(255, 255, 255, 0.66);
+    --glass-bg-strong: rgba(255, 255, 255, 0.80);
+    --glass-border: rgba(255, 255, 255, 0.88);
+    --glass-edge: rgba(255, 255, 255, 1);
+    --glass-ring: rgba(15, 23, 42, 0.07);
+    --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.06));
+    --glass-blur: saturate(180%) blur(24px);
+    --glass-shadow: 0 12px 32px rgba(31, 38, 135, 0.16), 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    /* Translucent section veil — lets the wallpaper read through */
+    --veil: rgba(255, 255, 255, 0.14);
     --chip: rgba(0, 0, 0, 0.05);
 
     /* Shape */
-    --radius-lg: 18px;
+    --radius-lg: 22px;
     --radius-pill: 980px;
 
     /* Motion — Apple's standard ease */
@@ -37,26 +49,35 @@
 
     /* Elevation */
     --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.055), 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-2: 0 14px 34px rgba(0, 0, 0, 0.13), 0 2px 6px rgba(0, 0, 0, 0.06);
+    --shadow-2: 0 22px 52px rgba(31, 38, 135, 0.24), 0 2px 6px rgba(0, 0, 0, 0.06);
 
     --max-width: 1080px;
     --nav-h: 52px;
+    --nav-gap: 12px;
 }
 
 /* Dark appearance — follows the macOS / iOS system setting automatically */
 @media (prefers-color-scheme: dark) {
     :root {
         --bg: #000000;
-        --bg-alt: #1c1c1e;
-        --card: #2c2c2e;
         --ink: #f5f5f7;
         --ink-2: #a1a1a6;
         --ink-3: #8e8e93;
         --hairline: rgba(255, 255, 255, 0.12);
-        --nav-bg: rgba(22, 22, 23, 0.72);
+
+        --glass-bg: rgba(52, 52, 58, 0.58);
+        --glass-bg-strong: rgba(30, 30, 34, 0.76);
+        --glass-border: rgba(255, 255, 255, 0.16);
+        --glass-edge: rgba(255, 255, 255, 0.30);
+        --glass-ring: rgba(255, 255, 255, 0.06);
+        --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.02));
+        --glass-shadow: 0 14px 36px rgba(0, 0, 0, 0.60), 0 1px 2px rgba(0, 0, 0, 0.45);
+
+        --veil: rgba(255, 255, 255, 0.03);
         --chip: rgba(255, 255, 255, 0.11);
+
         --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.5);
-        --shadow-2: 0 14px 34px rgba(0, 0, 0, 0.65);
+        --shadow-2: 0 22px 52px rgba(0, 0, 0, 0.75);
     }
 }
 
@@ -78,19 +99,48 @@ body {
     line-height: 1.47059;
     letter-spacing: -0.022em;
     color: var(--ink);
-    background-color: var(--bg);
+    background-color: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
+   Ambient wallpaper — the colour field the glass refracts
+   ========================================================================== */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -12%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(38% 34% at 16% 8%, rgba(0, 113, 227, 0.42), transparent 68%),
+        radial-gradient(34% 30% at 85% 4%, rgba(175, 82, 222, 0.38), transparent 68%),
+        radial-gradient(42% 38% at 76% 76%, rgba(255, 55, 95, 0.26), transparent 70%),
+        radial-gradient(38% 34% at 8% 88%, rgba(48, 213, 200, 0.30), transparent 70%);
+    filter: blur(26px);
+}
+
+@media (prefers-color-scheme: dark) {
+    body::before {
+        background:
+            radial-gradient(38% 34% at 16% 8%, rgba(10, 132, 255, 0.36), transparent 68%),
+            radial-gradient(34% 30% at 85% 4%, rgba(191, 90, 242, 0.32), transparent 68%),
+            radial-gradient(42% 38% at 76% 76%, rgba(255, 69, 58, 0.20), transparent 70%),
+            radial-gradient(38% 34% at 8% 88%, rgba(48, 213, 200, 0.18), transparent 70%);
+        filter: blur(44px);
+    }
 }
 
 ::selection {
     background: rgba(0, 113, 227, 0.22);
 }
 
-/* Anchors clear the frosted bar when jumped to */
+/* Anchors clear the floating capsule when jumped to */
 [id] {
-    scroll-margin-top: calc(var(--nav-h) + 14px);
+    scroll-margin-top: calc(var(--nav-h) + var(--nav-gap) + 28px);
 }
 
 a {
@@ -112,7 +162,7 @@ a {
 }
 
 .bg-alt {
-    background-color: var(--bg-alt);
+    background-color: var(--veil);
 }
 
 .text-center {
@@ -130,18 +180,26 @@ a {
 }
 
 /* ==========================================================================
-   Frosted navigation bar — the macOS menu bar
+   Floating glass capsule nav — the iOS 26 tab bar
    ========================================================================== */
 
 .navbar {
     position: sticky;
-    top: 0;
+    top: var(--nav-gap);
     z-index: 1000;
+    width: min(calc(var(--max-width) + 44px), calc(100% - 32px));
     height: var(--nav-h);
-    background-color: var(--nav-bg);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid var(--hairline);
+    margin: var(--nav-gap) auto 0;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--glass-bg-strong);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: saturate(200%) blur(28px);
+    backdrop-filter: saturate(200%) blur(28px);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        0 12px 34px rgba(31, 38, 135, 0.18);
 }
 
 .nav-container {
@@ -149,6 +207,7 @@ a {
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    padding: 0 18px;
 }
 
 .logo {
@@ -189,19 +248,15 @@ a {
 }
 
 /* ==========================================================================
-   Hero — wallpaper gradient
+   Hero — sits directly on the wallpaper
    ========================================================================== */
 
 .hero-section {
     position: relative;
-    padding: clamp(84px, 12vw, 150px) 0 clamp(72px, 9vw, 118px);
+    padding: clamp(72px, 10vw, 132px) 0 clamp(72px, 9vw, 118px);
     text-align: center;
     overflow: hidden;
-    background:
-        radial-gradient(900px 460px at 10% -10%, rgba(0, 113, 227, 0.16), transparent 62%),
-        radial-gradient(820px 420px at 92% 4%, rgba(175, 82, 222, 0.16), transparent 62%),
-        radial-gradient(760px 400px at 50% 112%, rgba(255, 55, 95, 0.10), transparent 62%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    background: transparent;
 }
 
 .hero-content h1 {
@@ -232,7 +287,7 @@ a {
 }
 
 /* ==========================================================================
-   Pill buttons
+   Glass capsule buttons
    ========================================================================== */
 
 .btn {
@@ -241,26 +296,34 @@ a {
     justify-content: center;
     min-height: 46px;
     padding: 11px 24px;
+    border: 1px solid transparent;
     border-radius: var(--radius-pill);
-    background-color: var(--blue);
+    background-color: rgba(0, 113, 227, 0.90);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 62%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(180%);
     color: #ffffff;
     font-size: 17px;
     font-weight: 400;
     letter-spacing: -0.022em;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(0, 113, 227, 0.28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 10px 26px rgba(0, 113, 227, 0.34);
     transition: background-color var(--dur) var(--ease),
                 transform var(--dur) var(--ease),
                 box-shadow var(--dur) var(--ease);
 }
 
 .btn:hover {
-    background-color: var(--blue-hover);
-    box-shadow: 0 6px 20px rgba(0, 113, 227, 0.36);
+    background-color: rgba(0, 122, 240, 0.96);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 14px 32px rgba(0, 113, 227, 0.42);
 }
 
 .btn:active {
-    background-color: var(--blue-press);
+    background-color: rgba(0, 110, 219, 0.96);
     transform: scale(0.972);
 }
 
@@ -270,15 +333,26 @@ a {
 }
 
 .btn-outline {
-    background-color: transparent;
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border-color: var(--glass-border);
     color: var(--blue);
-    box-shadow: inset 0 0 0 1.5px currentColor;
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        0 10px 26px rgba(31, 38, 135, 0.12);
 }
 
 .btn-outline:hover {
-    background-color: var(--blue);
+    background-color: rgba(0, 113, 227, 0.92);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 62%);
+    border-color: transparent;
     color: #ffffff;
-    box-shadow: inset 0 0 0 1.5px transparent, 0 6px 20px rgba(0, 113, 227, 0.3);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 12px 30px rgba(0, 113, 227, 0.36);
 }
 
 /* ==========================================================================
@@ -297,26 +371,37 @@ a {
 }
 
 /* ==========================================================================
-   Project cards
+   Glass project cards
    ========================================================================== */
 
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 20px;
+    gap: 22px;
 }
 
 .project-card {
-    background-color: var(--card);
+    position: relative;
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-1);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        var(--glass-shadow);
     overflow: hidden;
     transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .project-card:hover {
     transform: translateY(-6px);
-    box-shadow: var(--shadow-2);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        var(--shadow-2);
 }
 
 .card-body {
@@ -339,7 +424,7 @@ a {
     margin-bottom: 18px;
 }
 
-/* Capsule chips, like iOS tags */
+/* Glass capsule chips */
 .tags {
     display: flex;
     flex-wrap: wrap;
@@ -349,7 +434,14 @@ a {
 .tag {
     padding: 5px 12px;
     border-radius: var(--radius-pill);
-    background-color: var(--chip);
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    backdrop-filter: blur(10px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring);
     color: var(--ink-2);
     font-size: 12px;
     font-weight: 500;
@@ -364,8 +456,12 @@ a {
 
 .project-card.featured::before {
     content: "";
-    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 3px;
+    z-index: 2;
     background-image: linear-gradient(96deg, #0071e3 0%, #0a84ff 42%, var(--purple) 100%);
 }
 
@@ -386,7 +482,7 @@ a {
     padding: 0;
     border: 0;
     border-bottom: 1px solid var(--hairline);
-    background-color: var(--bg-alt);
+    background-color: transparent;
     cursor: zoom-in;
     overflow: hidden;
     -webkit-appearance: none;
@@ -395,7 +491,7 @@ a {
 }
 
 .card-media-wrap:hover {
-    opacity: 0.9;
+    opacity: 0.92;
 }
 
 .card-media-wrap:focus-visible {
@@ -432,7 +528,7 @@ a {
 
 .footer {
     padding: 28px 0 36px;
-    background-color: var(--bg-alt);
+    background-color: var(--veil);
     border-top: 1px solid var(--hairline);
     color: var(--ink-3);
     font-size: 12px;
@@ -451,9 +547,9 @@ a {
     align-items: center;
     justify-content: center;
     padding: 44px 28px;
-    background-color: rgba(0, 0, 0, 0.82);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    background-color: rgba(0, 0, 0, 0.72);
+    -webkit-backdrop-filter: blur(28px) saturate(140%);
+    backdrop-filter: blur(28px) saturate(140%);
     opacity: 0;
     transition: opacity var(--dur) var(--ease);
 }
@@ -469,8 +565,11 @@ a {
 .lightbox-img {
     max-width: 100%;
     max-height: 100%;
-    border-radius: 14px;
-    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 32px 80px rgba(0, 0, 0, 0.55);
     background-color: #ffffff;
 }
 
@@ -483,9 +582,12 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 0;
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    backdrop-filter: blur(14px) saturate(180%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
     color: #ffffff;
     font-size: 24px;
     line-height: 1;
@@ -494,7 +596,7 @@ a {
 }
 
 .lightbox-close:hover {
-    background-color: rgba(255, 255, 255, 0.32);
+    background-color: rgba(255, 255, 255, 0.34);
 }
 
 .lightbox-close:focus-visible {
@@ -508,16 +610,54 @@ body.lightbox-open {
 }
 
 /* ==========================================================================
+   Fallback — browsers without backdrop-filter get opaque glass
+   ========================================================================== */
+
+@supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))) {
+    .navbar {
+        background-color: rgba(251, 251, 253, 0.96);
+    }
+
+    .project-card {
+        background-color: rgba(255, 255, 255, 0.94);
+    }
+
+    .tag,
+    .btn-outline {
+        background-color: rgba(255, 255, 255, 0.92);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .navbar {
+            background-color: rgba(22, 22, 23, 0.96);
+        }
+
+        .project-card {
+            background-color: rgba(44, 44, 46, 0.94);
+        }
+
+        .tag,
+        .btn-outline {
+            background-color: rgba(58, 58, 60, 0.92);
+        }
+    }
+}
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
 
 @media (max-width: 640px) {
-    .hero-section {
-        padding: 76px 0 64px;
+    .navbar {
+        width: calc(100% - 24px);
+    }
+
+    .nav-container {
+        padding: 0 14px;
     }
 
     .logo {
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .nav-links {
@@ -525,8 +665,12 @@ body.lightbox-open {
     }
 
     .nav-links a {
-        padding: 6px 9px;
-        font-size: 13px;
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .hero-section {
+        padding: 64px 0 60px;
     }
 
     .card-body {
