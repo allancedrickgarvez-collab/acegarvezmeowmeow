@@ -1,220 +1,979 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-    <title>Allan Cedrick B. Garvez — Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+/* ==========================================================================
+   Apple "Liquid Glass" design system
+   Floating glass capsule nav, translucent layered glass, specular edges,
+   pointer-tracked glow, ambient wallpaper, automatic dark mode
+   ========================================================================== */
 
-    <!-- Navigation Header -->
-    <header class="navbar">
-        <div class="container nav-container">
-            <a href="#hero" class="logo">MyPortfolio</a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+:root {
+    /* Typography */
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+                 "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue",
+                 Helvetica, Arial, sans-serif;
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section">
-        <div class="container hero-content">
-            <h1>Hello, I'm <span class="highlight">Allan Cedrick B. Garvez</span></h1>
-            <p class="subtitle">Computer Engineering Student</p>
-            <a href="#projects" class="btn" data-glow>View My Work</a>
-        </div>
-    </section>
+    /* Apple system palette */
+    --blue: #0071e3;
+    --blue-hover: #0077ed;
+    --blue-press: #006edb;
+    --purple: #af52de;
+    --pink: #ff375f;
+    --teal: #30d5c8;
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <p>Will be filled soon.</p>
-            </div>
-        </div>
-    </section>
+    /* Light appearance */
+    --bg: #fbfbfd;
+    --ink: #1d1d1f;
+    --ink-2: #5f5f66;
+    --ink-3: #86868b;
+    --hairline: rgba(0, 0, 0, 0.09);
 
-    <!-- Projects Section -->
-    <section id="projects" class="section bg-alt">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="project-grid">
-                
-                <!-- Featured Project -->
-                <article class="project-card featured" data-glow>
-                    <button class="card-media-wrap" type="button"
-                            data-lightbox="job-order-tracker.png"
-                            aria-label="View the Job Order and Payment Tracker screenshot full size">
-                        <img class="card-media" src="job-order-tracker.png"
-                             alt="Job Order and Payment Tracker dashboard showing total paid collected, outstanding balance, payment distribution chart, collection by cashier chart, and the job order ledger table"
-                             loading="lazy">
-                    </button>
-                    <div class="card-body">
-                        <div class="card-eyebrow">Google Apps Script &middot; Web App</div>
-                        <h3>Job Order &amp; Payment Tracker</h3>
-                        <p>A real-time counter ledger for a laundry service, built as an Apps Script web app over a live Google Sheet. Debounced auto-save, background polling for multi-user sync, fuzzy name search across job orders, and Chart.js analytics — and row updates are written without ever clobbering the sheet's own formulas.</p>
-                        <div class="tags">
-                            <span class="tag">Apps Script</span>
-                            <span class="tag">Google Sheets</span>
-                            <span class="tag">Chart.js</span>
-                            <span class="tag">JavaScript</span>
-                        </div>
-                    </div>
-                </article>
+    /* Liquid Glass surfaces */
+    --glass-bg: rgba(255, 255, 255, 0.66);
+    --glass-bg-strong: rgba(255, 255, 255, 0.80);
+    --glass-border: rgba(255, 255, 255, 0.88);
+    --glass-edge: rgba(255, 255, 255, 1);
+    --glass-ring: rgba(15, 23, 42, 0.07);
+    --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.06));
+    --glass-blur: saturate(180%) blur(24px);
+    --glass-shadow: 0 12px 32px rgba(31, 38, 135, 0.16), 0 1px 2px rgba(0, 0, 0, 0.05);
 
-                <!-- Project Card 2 -->
-                <article class="project-card" data-glow>
-                    <div class="card-body">
-                        <h3>Project Two</h3>
-                        <p>Will be filled soon.</p>
-                        <div class="tags">
-                            <span class="tag">Kotlin</span>
-                            <span class="tag">Firebase</span>
-                        </div>
-                    </div>
-                </article>
+    /* Pointer-tracked glow */
+    --glow: rgba(255, 255, 255, 0.55);
+    --glow-size: 380px;
 
-                <!-- Project Card 3 -->
-                <article class="project-card" data-glow>
-                    <div class="card-body">
-                        <h3>Project Three</h3>
-                        <p>Will be filled soon.</p>
-                        <div class="tags">
-                            <span class="tag">Hardware</span>
-                            <span class="tag">C++</span>
-                        </div>
-                    </div>
-                </article>
+    /* Translucent section veil — lets the wallpaper read through */
+    --veil: rgba(255, 255, 255, 0.14);
+    --chip: rgba(0, 0, 0, 0.05);
 
-            </div>
-        </div>
-    </section>
+    /* Shape */
+    --radius-lg: 22px;
+    --radius-pill: 980px;
 
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container text-center">
-            <h2 class="section-title">Get In Touch</h2>
-            <p>Feel free to reach out for collaborations or project inquiries.</p>
-            <a href="mailto:your.email@example.com" class="btn btn-outline" data-glow>Send an Email</a>
-        </div>
-    </section>
+    /* Motion — Apple's standard ease */
+    --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --dur: 0.4s;
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container text-center">
-            <p>&copy; 2026 Allan Cedrick B. Garvez. All rights reserved.</p>
-        </div>
-    </footer>
+    /* Elevation */
+    --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.055), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-2: 0 22px 52px rgba(31, 38, 135, 0.24), 0 2px 6px rgba(0, 0, 0, 0.06);
 
-    <!-- Lightbox: click any project screenshot to pop it up full size -->
-    <div class="lightbox" id="lightbox" hidden>
-        <button class="lightbox-close" type="button" aria-label="Close full-size view">&times;</button>
-        <img class="lightbox-img" id="lightboxImg" src="" alt="">
-    </div>
+    --max-width: 1080px;
+    --nav-h: 52px;
+    --nav-gap: 12px;
+}
 
-    <script>
-        /* ---- Full-size lightbox ---- */
-        (function () {
-            var lightbox = document.getElementById('lightbox');
-            var lightboxImg = document.getElementById('lightboxImg');
-            var closeBtn = lightbox.querySelector('.lightbox-close');
-            var lastFocus = null;
+/* Dark appearance — follows the macOS / iOS system setting automatically */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #000000;
+        --ink: #f5f5f7;
+        --ink-2: #a1a1a6;
+        --ink-3: #8e8e93;
+        --hairline: rgba(255, 255, 255, 0.12);
 
-            function openLightbox(src, alt) {
-                lastFocus = document.activeElement;
-                lightboxImg.src = src;
-                lightboxImg.alt = alt || '';
-                lightbox.hidden = false;
-                requestAnimationFrame(function () {
-                    lightbox.classList.add('is-open');
-                });
-                document.body.classList.add('lightbox-open');
-                closeBtn.focus();
-            }
+        --glass-bg: rgba(52, 52, 58, 0.58);
+        --glass-bg-strong: rgba(30, 30, 34, 0.76);
+        --glass-border: rgba(255, 255, 255, 0.16);
+        --glass-edge: rgba(255, 255, 255, 0.30);
+        --glass-ring: rgba(255, 255, 255, 0.06);
+        --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.02));
+        --glass-shadow: 0 14px 36px rgba(0, 0, 0, 0.60), 0 1px 2px rgba(0, 0, 0, 0.45);
 
-            function closeLightbox() {
-                lightbox.classList.remove('is-open');
-                document.body.classList.remove('lightbox-open');
-                window.setTimeout(function () {
-                    lightbox.hidden = true;
-                    lightboxImg.src = '';
-                    if (lastFocus) lastFocus.focus();
-                }, 400);
-            }
+        --glow: rgba(255, 255, 255, 0.18);
 
-            Array.prototype.forEach.call(
-                document.querySelectorAll('[data-lightbox]'),
-                function (trigger) {
-                    trigger.addEventListener('click', function () {
-                        var img = trigger.querySelector('img');
-                        openLightbox(trigger.getAttribute('data-lightbox'), img ? img.alt : '');
-                    });
-                }
-            );
+        --veil: rgba(255, 255, 255, 0.03);
+        --chip: rgba(255, 255, 255, 0.11);
 
-            closeBtn.addEventListener('click', closeLightbox);
+        --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.5);
+        --shadow-2: 0 22px 52px rgba(0, 0, 0, 0.75);
+    }
+}
 
-            lightbox.addEventListener('click', function (event) {
-                if (event.target === lightbox) closeLightbox();
-            });
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-            document.addEventListener('keydown', function (event) {
-                if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
-            });
-        })();
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    background-color: var(--bg);
+}
 
-        /* ---- Pointer-tracked glow ------------------------------------------
-           Writes the cursor position into --mx / --my on any [data-glow]
-           element. The stylesheet turns those into a radial gradient, so the
-           light always sits exactly under the pointer. Throttled to one
-           update per animation frame, and skipped entirely on touch devices
-           and when the OS asks for reduced motion.
-        ------------------------------------------------------------------- */
-        (function () {
-            var hasPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-            var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (!hasPointer || calm) return;
+body {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.47059;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    background-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+}
 
-            var queued = new WeakMap();
+/* ==========================================================================
+   Ambient wallpaper — the colour field the glass refracts
+   ========================================================================== */
 
-            Array.prototype.forEach.call(
-                document.querySelectorAll('[data-glow]'),
-                function (target) {
-                    target.addEventListener('pointermove', function (event) {
-                        if (queued.get(target)) return;
+body::before {
+    content: "";
+    position: fixed;
+    inset: -12%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(38% 34% at 16% 8%, rgba(0, 113, 227, 0.42), transparent 68%),
+        radial-gradient(34% 30% at 85% 4%, rgba(175, 82, 222, 0.38), transparent 68%),
+        radial-gradient(42% 38% at 76% 76%, rgba(255, 55, 95, 0.26), transparent 70%),
+        radial-gradient(38% 34% at 8% 88%, rgba(48, 213, 200, 0.30), transparent 70%);
+    filter: blur(26px);
+}
 
-                        queued.set(target, requestAnimationFrame(function () {
-                            queued.delete(target);
-                            var box = target.getBoundingClientRect();
-                            target.style.setProperty(
-                                '--mx',
-                                ((event.clientX - box.left) / box.width * 100).toFixed(2) + '%'
-                            );
-                            target.style.setProperty(
-                                '--my',
-                                ((event.clientY - box.top) / box.height * 100).toFixed(2) + '%'
-                            );
-                        }));
-                    });
+@media (prefers-color-scheme: dark) {
+    body::before {
+        background:
+            radial-gradient(38% 34% at 16% 8%, rgba(10, 132, 255, 0.36), transparent 68%),
+            radial-gradient(34% 30% at 85% 4%, rgba(191, 90, 242, 0.32), transparent 68%),
+            radial-gradient(42% 38% at 76% 76%, rgba(255, 69, 58, 0.20), transparent 70%),
+            radial-gradient(38% 34% at 8% 88%, rgba(48, 213, 200, 0.18), transparent 70%);
+        filter: blur(44px);
+    }
+}
 
-                    target.addEventListener('pointerleave', function () {
-                        target.style.removeProperty('--mx');
-                        target.style.removeProperty('--my');
-                    });
-                }
-            );
-        })();
-    </script>
+::selection {
+    background: rgba(0, 113, 227, 0.22);
+}
 
-</body>
-</html>
+/* Anchors clear the floating capsule when jumped to */
+[id] {
+    scroll-margin-top: calc(var(--nav-h) + var(--nav-gap) + 28px);
+}
+
+a {
+    color: var(--blue);
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ==========================================================================
+   Pointer-tracked glow — one rule for every [data-glow] element.
+   --mx / --my are written by the script; the gradient centre follows them.
+   ========================================================================== */
+
+[data-glow] {
+    position: relative;
+}
+
+[data-glow]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+    background-image: radial-gradient(
+        var(--glow-size) circle at var(--mx, 50%) var(--my, 50%),
+        var(--glow),
+        rgba(255, 255, 255, 0) 62%
+    );
+}
+
+@media (hover: hover) and (pointer: fine) {
+    [data-glow]:hover::after {
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 22px;
+}
+
+.section {
+    padding: clamp(72px, 9vw, 118px) 0;
+}
+
+.bg-alt {
+    background-color: var(--veil);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section-title {
+    font-size: clamp(1.9rem, 4.2vw, 3rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+    text-wrap: balance;
+}
+
+/* ==========================================================================
+   Floating glass capsule nav — the iOS 26 tab bar
+   ========================================================================== */
+
+.navbar {
+    position: sticky;
+    top: var(--nav-gap);
+    z-index: 1000;
+    width: min(calc(var(--max-width) + 44px), calc(100% - 32px));
+    height: var(--nav-h);
+    margin: var(--nav-gap) auto 0;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--glass-bg-strong);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: saturate(200%) blur(28px);
+    backdrop-filter: saturate(200%) blur(28px);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        0 12px 34px rgba(31, 38, 135, 0.18);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 18px;
+}
+
+.logo {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    text-decoration: none;
+    transition: opacity var(--dur) var(--ease);
+}
+
+.logo:hover {
+    opacity: 0.6;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+}
+
+.nav-links a {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.nav-links a:hover {
+    color: var(--ink);
+    background-color: var(--chip);
+}
+
+/* ==========================================================================
+   Hero — sits directly on the wallpaper
+   ========================================================================== */
+
+.hero-section {
+    position: relative;
+    padding: clamp(72px, 10vw, 132px) 0 clamp(72px, 9vw, 118px);
+    text-align: center;
+    overflow: hidden;
+    background: transparent;
+}
+
+.hero-content h1 {
+    font-size: clamp(2.4rem, 6.2vw, 4.6rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin-bottom: 14px;
+    text-wrap: balance;
+}
+
+.highlight {
+    background-image: linear-gradient(96deg, #0071e3 0%, #0a84ff 42%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: clamp(1.125rem, 2.1vw, 1.5rem);
+    line-height: 1.35;
+    font-weight: 400;
+    letter-spacing: -0.024em;
+    color: var(--ink-2);
+    margin-bottom: 26px;
+    text-wrap: balance;
+}
+
+/* ==========================================================================
+   Social icon buttons
+   ========================================================================== */
+
+.social-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        0 8px 22px rgba(31, 38, 135, 0.14);
+    color: var(--ink-2);
+    transition: transform var(--dur) var(--ease),
+                color var(--dur) var(--ease),
+                box-shadow var(--dur) var(--ease);
+}
+
+.social-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-link:hover {
+    color: var(--blue);
+    transform: translateY(-3px) scale(1.06);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        0 14px 30px rgba(31, 38, 135, 0.22);
+}
+
+.social-link:focus-visible {
+    outline: 3px solid rgba(0, 113, 227, 0.5);
+    outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Glass capsule buttons
+   ========================================================================== */
+
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 11px 24px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    background-color: rgba(0, 113, 227, 0.90);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 62%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(180%);
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    text-decoration: none;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 10px 26px rgba(0, 113, 227, 0.34);
+    transition: background-color var(--dur) var(--ease),
+                transform var(--dur) var(--ease),
+                box-shadow var(--dur) var(--ease);
+}
+
+.btn svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+.btn:hover {
+    background-color: rgba(0, 122, 240, 0.96);
+    transform: scale(1.03);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 14px 32px rgba(0, 113, 227, 0.42);
+}
+
+.btn:active {
+    background-color: rgba(0, 110, 219, 0.96);
+    transform: scale(0.972);
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(0, 113, 227, 0.5);
+    outline-offset: 3px;
+}
+
+.btn-outline {
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border-color: var(--glass-border);
+    color: var(--blue);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        0 10px 26px rgba(31, 38, 135, 0.12);
+}
+
+.btn-outline:hover {
+    background-color: rgba(0, 113, 227, 0.92);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 62%);
+    border-color: transparent;
+    color: #ffffff;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 12px 30px rgba(0, 113, 227, 0.36);
+}
+
+.btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* ==========================================================================
+   About — portrait, bio, and school
+   ========================================================================== */
+
+.about-panel {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        var(--glass-shadow);
+}
+
+.about-avatar {
+    flex: 0 0 auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 10px 26px rgba(31, 38, 135, 0.20);
+    object-fit: cover;
+    object-position: 50% 18%;
+}
+
+.about-copy {
+    min-width: 0;
+}
+
+.about-lead {
+    font-size: clamp(1.0625rem, 1.7vw, 1.25rem);
+    line-height: 1.45;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    margin-bottom: 12px;
+    text-wrap: pretty;
+}
+
+.about-lead strong {
+    font-weight: 600;
+}
+
+.about-copy p + p {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    letter-spacing: -0.016em;
+    color: var(--ink-2);
+    text-wrap: pretty;
+}
+
+.about-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 26px;
+    margin-top: 22px;
+    padding: 0;
+    list-style: none;
+}
+
+.about-facts li {
+    font-size: 13px;
+    letter-spacing: -0.012em;
+    color: var(--ink-2);
+}
+
+.about-facts span {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 3px;
+}
+
+/* School photos */
+.campus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+    max-width: 880px;
+    margin: 22px auto 0;
+}
+
+.campus-figure {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        var(--glass-shadow);
+    overflow: hidden;
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.campus-figure img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.campus-figure figcaption {
+    padding: 14px 20px 16px;
+    border-top: 1px solid var(--hairline);
+    font-size: 12.5px;
+    letter-spacing: -0.01em;
+    color: var(--ink-2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .campus-figure:hover {
+        transform: scale(1.012);
+        box-shadow:
+            inset 0 1px 0 var(--glass-edge),
+            0 0 0 1px var(--glass-ring),
+            var(--shadow-2);
+    }
+}
+
+/* ==========================================================================
+   Glass project cards
+   ========================================================================== */
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 22px;
+}
+
+.project-card {
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring),
+        var(--glass-shadow);
+    overflow: hidden;
+    will-change: transform;
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .project-card:hover {
+        transform: translateY(-6px) scale(1.015);
+        box-shadow:
+            inset 0 1px 0 var(--glass-edge),
+            0 0 0 1px var(--glass-ring),
+            var(--shadow-2);
+    }
+}
+
+.card-body {
+    padding: 28px 26px 26px;
+}
+
+.card-body h3 {
+    font-size: 1.3125rem;
+    font-weight: 600;
+    line-height: 1.19;
+    letter-spacing: -0.024em;
+    margin-bottom: 8px;
+}
+
+.card-body p {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    letter-spacing: -0.016em;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+}
+
+/* Glass capsule chips */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    backdrop-filter: blur(10px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        0 0 0 1px var(--glass-ring);
+    color: var(--ink-2);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+}
+
+/* Featured project — full-width card with a gradient accent, like a hero app tile */
+.project-card.featured {
+    grid-column: 1 / -1;
+}
+
+.project-card.featured::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 4;
+    background-image: linear-gradient(96deg, #0071e3 0%, #0a84ff 42%, var(--purple) 100%);
+}
+
+.card-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 7px;
+}
+
+/* Clickable screenshot at the top of a project card.
+   The <button> wrapper keeps it keyboard-reachable and resets browser button chrome. */
+.card-media-wrap {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid var(--hairline);
+    background-color: transparent;
+    cursor: zoom-in;
+    overflow: hidden;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: opacity var(--dur) var(--ease);
+}
+
+.card-media-wrap:hover {
+    opacity: 0.92;
+}
+
+.card-media-wrap:focus-visible {
+    outline: 3px solid rgba(0, 113, 227, 0.5);
+    outline-offset: -3px;
+}
+
+/* Keeps the shot inside the card instead of spilling out at full size.
+   Extra-tall images are cropped from the bottom; click to see the whole thing. */
+.card-media {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 460px;
+    object-fit: cover;
+    object-position: top center;
+}
+
+/* ==========================================================================
+   Contact
+   ========================================================================== */
+
+#contact p {
+    max-width: 560px;
+    margin: 0 auto 30px;
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    letter-spacing: -0.022em;
+    color: var(--ink-2);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+    padding: 28px 0 36px;
+    background-color: var(--veil);
+    border-top: 1px solid var(--hairline);
+    color: var(--ink-3);
+    font-size: 12px;
+    letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   Lightbox — click a project screenshot to view it full size
+   ========================================================================== */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 44px 28px;
+    background-color: rgba(0, 0, 0, 0.72);
+    -webkit-backdrop-filter: blur(28px) saturate(140%);
+    backdrop-filter: blur(28px) saturate(140%);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+}
+
+.lightbox[hidden] {
+    display: none;
+}
+
+.lightbox.is-open {
+    opacity: 1;
+}
+
+.lightbox-img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 32px 80px rgba(0, 0, 0, 0.55);
+    background-color: #ffffff;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    backdrop-filter: blur(14px) saturate(180%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color var(--dur) var(--ease);
+}
+
+.lightbox-close:hover {
+    background-color: rgba(255, 255, 255, 0.34);
+}
+
+.lightbox-close:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+}
+
+/* Stop the page behind the lightbox from scrolling */
+body.lightbox-open {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Fallback — browsers without backdrop-filter get opaque glass
+   ========================================================================== */
+
+@supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))) {
+    .navbar {
+        background-color: rgba(251, 251, 253, 0.96);
+    }
+
+    .project-card,
+    .about-panel,
+    .campus-figure {
+        background-color: rgba(255, 255, 255, 0.94);
+    }
+
+    .tag,
+    .btn-outline,
+    .social-link {
+        background-color: rgba(255, 255, 255, 0.92);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .navbar {
+            background-color: rgba(22, 22, 23, 0.96);
+        }
+
+        .project-card,
+        .about-panel,
+        .campus-figure {
+            background-color: rgba(44, 44, 46, 0.94);
+        }
+
+        .tag,
+        .btn-outline,
+        .social-link {
+            background-color: rgba(58, 58, 60, 0.92);
+        }
+    }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 720px) {
+    .about-panel {
+        flex-direction: column;
+        gap: 20px;
+        padding: 26px 22px;
+        text-align: center;
+    }
+
+    .about-facts {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .navbar {
+        width: calc(100% - 24px);
+    }
+
+    .nav-container {
+        padding: 0 14px;
+    }
+
+    .logo {
+        font-size: 15px;
+    }
+
+    .nav-links {
+        gap: 0;
+    }
+
+    .nav-links a {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .hero-section {
+        padding: 64px 0 60px;
+    }
+
+    .about-avatar {
+        width: 116px;
+        height: 116px;
+    }
+
+    .card-body {
+        padding: 24px 22px 22px;
+    }
+
+    .card-media {
+        max-height: 300px;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .btn-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .lightbox {
+        padding: 62px 14px 20px;
+    }
+}
+
+/* Respect the system Reduce Motion setting — no glow, no scale */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+    .project-card:hover,
+    .campus-figure:hover {
+        transform: none;
+    }
+
+    [data-glow]::after {
+        display: none;
+    }
+}
