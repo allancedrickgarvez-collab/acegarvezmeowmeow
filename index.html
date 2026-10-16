@@ -30,7 +30,7 @@
         <div class="container hero-content">
             <h1>Hello, I'm <span class="highlight">Allan Cedrick B. Garvez</span></h1>
             <p class="subtitle">Computer Engineering Student</p>
-            <a href="#projects" class="btn">View My Work</a>
+            <a href="#projects" class="btn" data-glow>View My Work</a>
         </div>
     </section>
 
@@ -51,7 +51,7 @@
             <div class="project-grid">
                 
                 <!-- Featured Project -->
-                <article class="project-card featured">
+                <article class="project-card featured" data-glow>
                     <button class="card-media-wrap" type="button"
                             data-lightbox="job-order-tracker.png"
                             aria-label="View the Job Order and Payment Tracker screenshot full size">
@@ -73,7 +73,7 @@
                 </article>
 
                 <!-- Project Card 2 -->
-                <article class="project-card">
+                <article class="project-card" data-glow>
                     <div class="card-body">
                         <h3>Project Two</h3>
                         <p>Will be filled soon.</p>
@@ -85,7 +85,7 @@
                 </article>
 
                 <!-- Project Card 3 -->
-                <article class="project-card">
+                <article class="project-card" data-glow>
                     <div class="card-body">
                         <h3>Project Three</h3>
                         <p>Will be filled soon.</p>
@@ -105,7 +105,7 @@
         <div class="container text-center">
             <h2 class="section-title">Get In Touch</h2>
             <p>Feel free to reach out for collaborations or project inquiries.</p>
-            <a href="mailto:your.email@example.com" class="btn btn-outline">Send an Email</a>
+            <a href="mailto:your.email@example.com" class="btn btn-outline" data-glow>Send an Email</a>
         </div>
     </section>
 
@@ -123,6 +123,7 @@
     </div>
 
     <script>
+        /* ---- Full-size lightbox ---- */
         (function () {
             var lightbox = document.getElementById('lightbox');
             var lightboxImg = document.getElementById('lightboxImg');
@@ -170,6 +171,48 @@
             document.addEventListener('keydown', function (event) {
                 if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
             });
+        })();
+
+        /* ---- Pointer-tracked glow ------------------------------------------
+           Writes the cursor position into --mx / --my on any [data-glow]
+           element. The stylesheet turns those into a radial gradient, so the
+           light always sits exactly under the pointer. Throttled to one
+           update per animation frame, and skipped entirely on touch devices
+           and when the OS asks for reduced motion.
+        ------------------------------------------------------------------- */
+        (function () {
+            var hasPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!hasPointer || calm) return;
+
+            var queued = new WeakMap();
+
+            Array.prototype.forEach.call(
+                document.querySelectorAll('[data-glow]'),
+                function (target) {
+                    target.addEventListener('pointermove', function (event) {
+                        if (queued.get(target)) return;
+
+                        queued.set(target, requestAnimationFrame(function () {
+                            queued.delete(target);
+                            var box = target.getBoundingClientRect();
+                            target.style.setProperty(
+                                '--mx',
+                                ((event.clientX - box.left) / box.width * 100).toFixed(2) + '%'
+                            );
+                            target.style.setProperty(
+                                '--my',
+                                ((event.clientY - box.top) / box.height * 100).toFixed(2) + '%'
+                            );
+                        }));
+                    });
+
+                    target.addEventListener('pointerleave', function () {
+                        target.style.removeProperty('--mx');
+                        target.style.removeProperty('--my');
+                    });
+                }
+            );
         })();
     </script>
 
