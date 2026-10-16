@@ -1,7 +1,7 @@
 /* ==========================================================================
    Apple "Liquid Glass" design system
    Floating glass capsule nav, translucent layered glass, specular edges,
-   ambient wallpaper, SF typography, automatic dark mode
+   pointer-tracked glow, ambient wallpaper, automatic dark mode
    ========================================================================== */
 
 :root {
@@ -34,6 +34,10 @@
     --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.06));
     --glass-blur: saturate(180%) blur(24px);
     --glass-shadow: 0 12px 32px rgba(31, 38, 135, 0.16), 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    /* Pointer-tracked glow */
+    --glow: rgba(255, 255, 255, 0.55);
+    --glow-size: 380px;
 
     /* Translucent section veil — lets the wallpaper read through */
     --veil: rgba(255, 255, 255, 0.14);
@@ -72,6 +76,8 @@
         --glass-ring: rgba(255, 255, 255, 0.06);
         --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.02));
         --glass-shadow: 0 14px 36px rgba(0, 0, 0, 0.60), 0 1px 2px rgba(0, 0, 0, 0.45);
+
+        --glow: rgba(255, 255, 255, 0.18);
 
         --veil: rgba(255, 255, 255, 0.03);
         --chip: rgba(255, 255, 255, 0.11);
@@ -287,10 +293,12 @@ a {
 }
 
 /* ==========================================================================
-   Glass capsule buttons
+   Glass capsule buttons — also catch the pointer light
    ========================================================================== */
 
 .btn {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -315,8 +323,30 @@ a {
                 box-shadow var(--dur) var(--ease);
 }
 
+.btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+    background-image: radial-gradient(
+        var(--glow-size) circle at var(--mx, 50%) var(--my, 50%),
+        rgba(255, 255, 255, 0.65),
+        rgba(255, 255, 255, 0) 55%
+    );
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn:hover::after {
+        opacity: 1;
+    }
+}
+
 .btn:hover {
     background-color: rgba(0, 122, 240, 0.96);
+    transform: scale(1.03);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
         0 14px 32px rgba(0, 113, 227, 0.42);
@@ -393,15 +423,41 @@ a {
         0 0 0 1px var(--glass-ring),
         var(--glass-shadow);
     overflow: hidden;
+    will-change: transform;
     transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
-.project-card:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        inset 0 1px 0 var(--glass-edge),
-        0 0 0 1px var(--glass-ring),
-        var(--shadow-2);
+/* The light that follows the cursor — position comes from --mx / --my,
+   which the pointer script writes on every mousemove (throttled to one
+   frame). Falls back to the centre when the pointer has never entered. */
+.project-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+    background-image: radial-gradient(
+        var(--glow-size) circle at var(--mx, 50%) var(--my, 50%),
+        var(--glow),
+        rgba(255, 255, 255, 0) 62%
+    );
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .project-card:hover::after {
+        opacity: 1;
+    }
+
+    .project-card:hover {
+        transform: translateY(-6px) scale(1.015);
+        box-shadow:
+            inset 0 1px 0 var(--glass-edge),
+            0 0 0 1px var(--glass-ring),
+            var(--shadow-2);
+    }
 }
 
 .card-body {
@@ -461,7 +517,7 @@ a {
     left: 0;
     right: 0;
     height: 3px;
-    z-index: 2;
+    z-index: 4;
     background-image: linear-gradient(96deg, #0071e3 0%, #0a84ff 42%, var(--purple) 100%);
 }
 
@@ -691,7 +747,7 @@ body.lightbox-open {
     }
 }
 
-/* Respect the system Reduce Motion setting */
+/* Respect the system Reduce Motion setting — no glow, no scale */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -707,5 +763,10 @@ body.lightbox-open {
 
     .project-card:hover {
         transform: none;
+    }
+
+    .project-card::after,
+    .btn::after {
+        display: none;
     }
 }
