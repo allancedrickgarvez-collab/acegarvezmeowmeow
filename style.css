@@ -328,7 +328,7 @@ img {
 }
 
 /* ==========================================================================
-   Social icon buttons
+   Social icon buttons — small glass circles
    ========================================================================== */
 
 .social-row {
@@ -343,8 +343,9 @@ img {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
     border: 1px solid var(--glass-border);
     border-radius: 50%;
     background-color: var(--glass-bg);
@@ -361,9 +362,13 @@ img {
                 box-shadow var(--dur) var(--ease);
 }
 
+/* Hard-caps the icon so an unstyled SVG can never blow up to its 300px default */
 .social-link svg {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
+    max-width: 19px;
+    max-height: 19px;
+    flex: 0 0 auto;
 }
 
 .social-link:hover {
@@ -415,6 +420,8 @@ img {
 .btn svg {
     width: 18px;
     height: 18px;
+    max-width: 18px;
+    max-height: 18px;
     flex: 0 0 auto;
 }
 
@@ -468,16 +475,13 @@ img {
 }
 
 /* ==========================================================================
-   About — portrait, bio, and school
+   About — profile header + Instagram-style photo grid
    ========================================================================== */
 
 .about-panel {
-    display: flex;
-    align-items: center;
-    gap: 30px;
     max-width: 880px;
     margin: 0 auto;
-    padding: 30px;
+    padding: 26px;
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
     background-color: var(--glass-bg);
@@ -490,10 +494,19 @@ img {
         var(--glass-shadow);
 }
 
+/* Profile header: avatar on the left, bio on the right */
+.about-head {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--hairline);
+}
+
 .about-avatar {
     flex: 0 0 auto;
-    width: 140px;
-    height: 140px;
+    width: 118px;
+    height: 118px;
     border-radius: 50%;
     border: 1px solid var(--glass-border);
     box-shadow:
@@ -532,7 +545,7 @@ img {
     display: flex;
     flex-wrap: wrap;
     gap: 14px 26px;
-    margin-top: 22px;
+    margin-top: 20px;
     padding: 0;
     list-style: none;
 }
@@ -553,53 +566,69 @@ img {
     margin-bottom: 3px;
 }
 
-/* School photos */
-.campus-grid {
+/* ---- Photo grid: square tiles, tight gaps, hover zoom. Feed-style. ---- */
+
+.photo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 22px;
-    max-width: 880px;
-    margin: 22px auto 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 22px;
 }
 
-.campus-figure {
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    background-color: var(--glass-bg);
-    background-image: var(--glass-sheen);
-    -webkit-backdrop-filter: var(--glass-blur);
-    backdrop-filter: var(--glass-blur);
-    box-shadow:
-        inset 0 1px 0 var(--glass-edge),
-        0 0 0 1px var(--glass-ring),
-        var(--glass-shadow);
-    overflow: hidden;
-    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-}
-
-.campus-figure img {
+.photo-tile {
+    position: relative;
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    padding: 0;
+    border: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: var(--chip);
+    cursor: zoom-in;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: box-shadow var(--dur) var(--ease);
+}
+
+.photo-tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
+    transition: transform 0.6s var(--ease);
 }
 
-.campus-figure figcaption {
-    padding: 14px 20px 16px;
-    border-top: 1px solid var(--hairline);
-    font-size: 12.5px;
-    letter-spacing: -0.01em;
-    color: var(--ink-2);
+.photo-tile:hover img {
+    transform: scale(1.07);
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .campus-figure:hover {
-        transform: scale(1.012);
-        box-shadow:
-            inset 0 1px 0 var(--glass-edge),
-            0 0 0 1px var(--glass-ring),
-            var(--shadow-2);
-    }
+.photo-tile:hover {
+    box-shadow: 0 0 0 2px var(--glass-edge), 0 14px 34px rgba(31, 38, 135, 0.28);
+}
+
+.photo-tile:focus-visible {
+    outline: 3px solid rgba(0, 113, 227, 0.55);
+    outline-offset: 3px;
+}
+
+/* Location-style chip, like Instagram's tags */
+.photo-tag {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 5;
+    padding: 5px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: var(--radius-pill);
+    background-color: rgba(0, 0, 0, 0.40);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(180%);
+    color: #ffffff;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -770,7 +799,7 @@ img {
 }
 
 /* ==========================================================================
-   Lightbox — click a project screenshot to view it full size
+   Lightbox — click any screenshot or photo to view it full size
    ========================================================================== */
 
 .lightbox {
@@ -853,8 +882,7 @@ body.lightbox-open {
     }
 
     .project-card,
-    .about-panel,
-    .campus-figure {
+    .about-panel {
         background-color: rgba(255, 255, 255, 0.94);
     }
 
@@ -870,8 +898,7 @@ body.lightbox-open {
         }
 
         .project-card,
-        .about-panel,
-        .campus-figure {
+        .about-panel {
             background-color: rgba(44, 44, 46, 0.94);
         }
 
@@ -888,10 +915,9 @@ body.lightbox-open {
    ========================================================================== */
 
 @media (max-width: 720px) {
-    .about-panel {
+    .about-head {
         flex-direction: column;
-        gap: 20px;
-        padding: 26px 22px;
+        gap: 18px;
         text-align: center;
     }
 
@@ -926,9 +952,30 @@ body.lightbox-open {
         padding: 64px 0 60px;
     }
 
+    .social-link {
+        width: 44px;
+        height: 44px;
+    }
+
+    .about-panel {
+        padding: 20px;
+    }
+
     .about-avatar {
-        width: 116px;
-        height: 116px;
+        width: 96px;
+        height: 96px;
+    }
+
+    .photo-grid {
+        gap: 6px;
+        margin-top: 18px;
+    }
+
+    .photo-tag {
+        left: 8px;
+        bottom: 8px;
+        padding: 4px 9px;
+        font-size: 10.5px;
     }
 
     .card-body {
@@ -954,7 +1001,7 @@ body.lightbox-open {
     }
 }
 
-/* Respect the system Reduce Motion setting — no glow, no scale */
+/* Respect the system Reduce Motion setting — no glow, no zoom */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -968,8 +1015,11 @@ body.lightbox-open {
         animation-iteration-count: 1 !important;
     }
 
-    .project-card:hover,
-    .campus-figure:hover {
+    .project-card:hover {
+        transform: none;
+    }
+
+    .photo-tile:hover img {
         transform: none;
     }
 
