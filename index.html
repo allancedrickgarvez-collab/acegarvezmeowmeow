@@ -25,7 +25,7 @@
     <meta name="twitter:image" content="https://allancedrickgarvez-collab.github.io/acegarvezmeowmeow/preview.png">
 
     <title>Ace Garvez — Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
@@ -105,95 +105,86 @@
         </div>
     </section>
 
-    <!-- Projects -->
+    <!-- Projects — the artwork stays pinned while the copy scrolls over it -->
     <section class="band" id="projects">
         <div class="wrap narrow center">
             <h2 class="display">Three projects.<br>All shipped.</h2>
         </div>
 
-        <!-- Project 01 -->
-        <article class="project">
-            <div class="wrap narrow center">
-                <p class="eyebrow">Google Apps Script &middot; Web app</p>
-                <h3 class="display-sm">Job Order &amp; Payment Tracker.</h3>
-                <p class="lede">
-                    A real-time counter ledger built as an <strong>Apps Script web app</strong> over a
-                    <strong>live Google Sheet</strong>. Debounced auto-save, background polling for
-                    multi-user sync, fuzzy name search across job orders, and Chart.js analytics — and
-                    row updates are written without ever <strong>clobbering the sheet's own formulas</strong>.
-                </p>
-            </div>
-            <div class="wrap">
-                <button class="shot" type="button" data-lightbox="job-order-tracker.png"
-                        aria-label="View the Job Order and Payment Tracker screenshot full size">
-                    <img src="job-order-tracker.png"
+        <div class="story" id="story">
+            <div class="story-viewport">
+
+                <!-- 01 -->
+                <article class="story-item is-active">
+                    <div class="story-panel">
+                        <p class="story-eyebrow">Google Apps Script &middot; Web app</p>
+                        <h3 class="story-headline">Job Order &amp; Payment Tracker.</h3>
+                        <p class="story-lede">
+                            A real-time counter ledger built as an <strong>Apps Script web app</strong>
+                            over a <strong>live Google Sheet</strong>. Debounced auto-save, background
+                            polling for multi-user sync, fuzzy name search, and Chart.js analytics —
+                            without ever <strong>clobbering the sheet's own formulas</strong>.
+                        </p>
+                        <button class="chevron-link as-button" type="button"
+                                data-lightbox="job-order-tracker.png">See the full dashboard</button>
+                    </div>
+                    <div class="story-scrim" aria-hidden="true"></div>
+                    <img class="story-bg" src="job-order-tracker.png" alt="" aria-hidden="true">
+                    <img class="story-fg" src="job-order-tracker.png"
                          alt="Job Order and Payment Tracker dashboard showing total paid collected, outstanding balance, payment distribution chart, collection by cashier chart, and the job order ledger table"
                          loading="lazy">
-                </button>
-            </div>
-            <div class="wrap narrow center">
-                <button class="chevron-link as-button" type="button" data-lightbox="job-order-tracker.png">
-                    See the full dashboard
-                </button>
-            </div>
-        </article>
+                </article>
 
-        <!-- Project 02 -->
-        <article class="project">
-            <div class="wrap narrow center">
-                <p class="eyebrow">Android &middot; Kotlin</p>
-                <h3 class="display-sm">Campus Event Manager.</h3>
-                <p class="lede">
-                    A native Android app that runs campus events across <strong>three roles</strong> —
-                    student, organization, and admin. Firestore real-time listeners drive live headcounts
-                    and capacity limits, and students check in by scanning a QR code that only works when
-                    <strong>GPS confirms they're on campus</strong>. A Cloud Function fans out FCM push
-                    notifications whenever an organization posts an event, pruning dead device tokens as it goes.
-                </p>
-            </div>
-            <div class="wrap">
-                <button class="shot shot-logo" type="button" data-lightbox="campus-event-manager.jpg"
-                        aria-label="View the Campus Event Manager logo full size">
-                    <img src="campus-event-manager.jpg"
+                <!-- 02 -->
+                <article class="story-item">
+                    <div class="story-panel">
+                        <p class="story-eyebrow">Android &middot; Kotlin</p>
+                        <h3 class="story-headline">Campus Event Manager.</h3>
+                        <p class="story-lede">
+                            A native Android app that runs campus events across <strong>three roles</strong>
+                            — student, organization, and admin. Firestore listeners drive live headcounts,
+                            and students check in with a QR code that only works when
+                            <strong>GPS confirms they're on campus</strong>.
+                        </p>
+                        <button class="chevron-link as-button" type="button"
+                                data-lightbox="campus-event-manager.jpg">See the emblem</button>
+                    </div>
+                    <div class="story-scrim" aria-hidden="true"></div>
+                    <img class="story-bg" src="campus-event-manager.jpg" alt="" aria-hidden="true">
+                    <img class="story-fg" src="campus-event-manager.jpg"
                          alt="Campus Event Manager logo — a gold letter C inside an oval frame with leaf ornaments on a dark background"
                          loading="lazy">
-                </button>
-            </div>
-            <div class="wrap narrow center">
-                <button class="chevron-link as-button" type="button" data-lightbox="campus-event-manager.jpg">
-                    See the emblem
-                </button>
-            </div>
-        </article>
+                </article>
 
-        <!-- Project 03 -->
-        <article class="project">
-            <div class="wrap narrow center">
-                <p class="eyebrow">Android &middot; Kotlin &middot; AI</p>
-                <h3 class="display-sm">DocQuizAI.</h3>
-                <p class="lede">
-                    An Android app that answers questions from a reference document using
-                    <strong>Claude</strong>. A loaded PDF is stripped to plain text by PDFBox-Android and
-                    becomes the knowledge base; a floating, draggable overlay built on
-                    <strong>MediaProjection</strong>, VirtualDisplay and ImageReader then captures the
-                    screen, reads the question with <strong>ML Kit OCR</strong>, and returns the answer
-                    in place — without the user leaving the page.
-                </p>
-            </div>
-            <div class="wrap">
-                <button class="shot shot-logo" type="button" data-lightbox="docquiz-ai.png"
-                        aria-label="View the DocQuizAI icon full size">
-                    <img src="docquiz-ai.png"
+                <!-- 03 -->
+                <article class="story-item">
+                    <div class="story-panel">
+                        <p class="story-eyebrow">Android &middot; Kotlin &middot; AI</p>
+                        <h3 class="story-headline">DocQuizAI.</h3>
+                        <p class="story-lede">
+                            An Android app that answers questions from a reference document using
+                            <strong>Claude</strong>. A MediaProjection overlay captures the screen, reads
+                            the question with <strong>ML Kit OCR</strong>, and returns the answer in
+                            place — without the user leaving the page.
+                        </p>
+                        <button class="chevron-link as-button" type="button"
+                                data-lightbox="docquiz-ai.png">See the icon</button>
+                    </div>
+                    <div class="story-scrim" aria-hidden="true"></div>
+                    <img class="story-bg" src="docquiz-ai.png" alt="" aria-hidden="true">
+                    <img class="story-fg" src="docquiz-ai.png"
                          alt="DocQuizAI icon — a white document with text lines and sparkles on a blue-to-purple gradient"
                          loading="lazy">
-                </button>
+                </article>
+
+                <div class="story-dots" aria-hidden="true">
+                    <span class="is-active"></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
             </div>
-            <div class="wrap narrow center">
-                <button class="chevron-link as-button" type="button" data-lightbox="docquiz-ai.png">
-                    See the icon
-                </button>
-            </div>
-        </article>
+        </div>
     </section>
 
     <!-- Skills -->
@@ -383,7 +374,7 @@
 
             var targets = document.querySelectorAll(
                 '.band .display, .band .display-sm, .band .lede, .band .eyebrow, ' +
-                '.facts, .gallery, .shot, .portrait, .tile, .edu-grid, .promo'
+                '.facts, .gallery, .portrait, .tile, .edu-grid, .promo'
             );
             if (!targets.length) return;
 
@@ -402,6 +393,64 @@
             Array.prototype.forEach.call(targets, function (target) {
                 observer.observe(target);
             });
+        })();
+
+        /* ---- Pinned scroll story ------------------------------------------
+           Swaps which project is on screen as the story scrolls through its
+           tall container, so the artwork appears to hold still while the copy
+           moves over it. The container is only made tall — and the items only
+           stacked — once .is-live lands, so without JS (or with reduced motion
+           requested) the projects render as three plain stacked blocks.
+        ------------------------------------------------------------------ */
+        (function () {
+            var story = document.getElementById('story');
+            if (!story) return;
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var items = story.querySelectorAll('.story-item');
+            var dots = story.querySelectorAll('.story-dots span');
+            var count = items.length;
+            if (count < 2) return;
+
+            story.classList.add('is-live');
+
+            var current = -1;
+            var frame = null;
+
+            function activate(index) {
+                if (index === current) return;
+                current = index;
+
+                for (var i = 0; i < count; i++) {
+                    items[i].classList.toggle('is-active', i === index);
+                    if (dots[i]) dots[i].classList.toggle('is-active', i === index);
+                }
+            }
+
+            function update() {
+                frame = null;
+
+                var travel = story.offsetHeight - window.innerHeight;
+                if (travel <= 0) {
+                    activate(0);
+                    return;
+                }
+
+                var progress = -story.getBoundingClientRect().top / travel;
+                progress = progress < 0 ? 0 : (progress > 1 ? 1 : progress);
+
+                activate(Math.min(count - 1, Math.floor(progress * count)));
+            }
+
+            function onScroll() {
+                if (frame) return;
+                frame = requestAnimationFrame(update);
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            update();
         })();
     </script>
 
