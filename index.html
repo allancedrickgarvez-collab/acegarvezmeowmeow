@@ -142,12 +142,22 @@
 
                 <!-- Project Card 2 -->
                 <article class="project-card" data-glow>
+                    <button class="card-media-wrap" type="button"
+                            data-lightbox="campus-event-manager.jpg"
+                            aria-label="View the Campus Event Manager logo full size">
+                        <img class="card-logo" src="campus-event-manager.jpg"
+                             alt="Campus Event Manager logo — a gold letter C inside an oval frame with leaf ornaments on a dark background"
+                             loading="lazy">
+                    </button>
                     <div class="card-body">
-                        <h3>Project Two</h3>
-                        <p>Will be filled soon.</p>
+                        <div class="card-eyebrow">Android &middot; Kotlin</div>
+                        <h3>Campus Event Manager</h3>
+                        <p>A native Android app in Kotlin that runs campus events across three roles — student, organization, and admin. Firestore real-time listeners drive live headcounts and capacity limits, and students check in by scanning a QR code that only works when GPS confirms they are physically on campus. A Cloud Function fans out FCM push notifications whenever an organization posts an event, pruning dead device tokens as it goes.</p>
                         <div class="tags">
                             <span class="tag">Kotlin</span>
                             <span class="tag">Firebase</span>
+                            <span class="tag">Firestore</span>
+                            <span class="tag">Cloud Functions</span>
                         </div>
                     </div>
                 </article>
