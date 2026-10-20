@@ -1,8 +1,4 @@
-/* ==========================================================================
-   Apple-inspired product-page system
-   Flat colour blocks, oversized type, one idea per section, bold key phrases
-   inside body copy. The portfolio stays in Apple's clean light presentation.
-   ========================================================================== */
+
 
 :root {
        color-scheme: only light;
@@ -10,7 +6,7 @@
                  "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue",
                  Helvetica, Arial, sans-serif;
 
-    /* Light appearance */
+    
     --bg: #ffffff;
     --bg-alt: #f5f5f7;
     --tile: #ffffff;
@@ -73,9 +69,7 @@ img {
     outline-offset: 3px;
 }
 
-/* ==========================================================================
-   Local nav — Apple's sticky product bar
-   ========================================================================== */
+
 
 .localnav {
     position: sticky;
@@ -142,9 +136,7 @@ img {
     background-color: var(--blue-hover);
 }
 
-/* ==========================================================================
-   Layout
-   ========================================================================== */
+
 
 .wrap {
     max-width: 1024px;
@@ -173,9 +165,7 @@ img {
     background-color: var(--tile-band);
 }
 
-/* ==========================================================================
-   Type scale
-   ========================================================================== */
+
 
 .display {
     font-size: clamp(2.25rem, 5.2vw, 4rem);
@@ -212,7 +202,7 @@ img {
     text-wrap: pretty;
 }
 
-/* The Apple move: key phrases inside body copy go full-strength ink */
+
 .lede strong {
     font-weight: 600;
     color: var(--ink);
@@ -225,9 +215,7 @@ img {
     color: var(--ink-2);
 }
 
-/* ==========================================================================
-   Hero
-   ========================================================================== */
+
 
 .hero {
     position: relative;
@@ -454,9 +442,7 @@ img {
     animation: rise 0.8s var(--ease) 0.38s both;
 }
 
-/* ==========================================================================
-   Actions
-   ========================================================================== */
+
 
 .cta-row {
     display: flex;
@@ -490,7 +476,7 @@ img {
     transform: scale(0.97);
 }
 
-/* Apple's "Learn more ›" affordance */
+
 .chevron-link {
     display: inline-flex;
     align-items: center;
@@ -521,9 +507,7 @@ img {
     padding: 12px 0;
 }
 
-/* ==========================================================================
-   About
-   ========================================================================== */
+
 
 .feature-image {
     display: block;
@@ -564,7 +548,7 @@ img {
     color: var(--ink-3);
 }
 
-/* Photo gallery, two up */
+
 .gallery {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -616,13 +600,7 @@ img {
     text-overflow: ellipsis;
 }
 
-/* ==========================================================================
-   Projects — a pinned scroll story
-   The media holds still while the copy scrolls over it, one project at a time.
-   Base rules below are the no-JS / reduced-motion fallback: a plain stack of
-   text-then-image blocks, nothing hidden. .is-live (added by script) swaps in
-   the pinned behaviour.
-   ========================================================================== */
+
 
 .story {
     height: auto;
@@ -638,7 +616,7 @@ img {
     padding-top: clamp(52px, 7vw, 92px);
 }
 
-/* Fallback order: copy first, artwork after */
+
 .story-bg,
 .story-scrim,
 .story-dots {
@@ -653,7 +631,7 @@ img {
     padding: 0 22px;
 }
 
-/* ---- Pinned mode ---- */
+
 
 .story.is-live {
     height: 360vh;
@@ -691,8 +669,7 @@ img {
     visibility: visible;
 }
 
-/* Blurred overscan fills the screen; the sharp copy sits inside it whole,
-   so a square app icon and a wide dashboard both work the same way. */
+
 .story.is-live .story-bg {
     display: block;
     position: absolute;
@@ -717,8 +694,7 @@ img {
     object-fit: contain;
 }
 
-/* A spotlight, not a wash: the copy sits on solid darkness while the artwork
-   stays readable around it. Bright screenshots need this; dark ones ignore it. */
+
 .story.is-live .story-scrim {
     display: block;
     position: absolute;
@@ -754,7 +730,7 @@ img {
     transform: translate(-50%, -50%);
 }
 
-/* ---- Story copy — shared by both modes ---- */
+
 
 .story-panel {
     max-width: 780px;
@@ -799,7 +775,7 @@ img {
     margin-top: 18px;
 }
 
-/* Over a photograph, everything goes white */
+
 .story.is-live .story-eyebrow {
     color: rgba(255, 255, 255, 0.70);
 }
@@ -845,9 +821,7 @@ img {
     background-color: #ffffff;
 }
 
-/* ==========================================================================
-   Skills tiles
-   ========================================================================== */
+
 
 .section-head {
     display: flex;
@@ -904,9 +878,7 @@ img {
     white-space: nowrap;
 }
 
-/* ==========================================================================
-   Education
-   ========================================================================== */
+
 
 .edu-grid {
     display: grid;
@@ -961,9 +933,7 @@ img {
     color: var(--ink-2);
 }
 
-/* ==========================================================================
-   Contact
-   ========================================================================== */
+
 
 .promo {
     background-color: var(--bg-alt);
@@ -985,9 +955,7 @@ img {
     background-color: var(--tile);
 }
 
-/* ==========================================================================
-   Footer
-   ========================================================================== */
+
 
 .footer {
     padding: 32px 0 48px;
@@ -1020,9 +988,7 @@ img {
     color: var(--ink-3);
 }
 
-/* ==========================================================================
-   Scroll reveal — a short lift as each section arrives
-   ========================================================================== */
+
 
 .reveal {
     opacity: 0;
@@ -1035,9 +1001,7 @@ img {
     transform: none;
 }
 
-/* ==========================================================================
-   Lightbox — click any screenshot or photo to view it full size
-   ========================================================================== */
+
 
 .lightbox {
     position: fixed;
@@ -1098,9 +1062,7 @@ body.lightbox-open {
     overflow: hidden;
 }
 
-/* ==========================================================================
-   Responsive
-   ========================================================================== */
+
 
 @media (max-width: 720px) {
     .hero {
@@ -1264,7 +1226,7 @@ body.lightbox-open {
     }
 }
 
-/* Respect the system Reduce Motion setting */
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
