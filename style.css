@@ -5,6 +5,7 @@
    ========================================================================== */
 
 :root {
+       color-scheme: only light;
     --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
                  "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue",
                  Helvetica, Arial, sans-serif;
